@@ -1,4 +1,4 @@
-name: Multi Job Pipeline
+name: Docker and Kubernetes Pipeline
 
 on:
   push:
@@ -14,8 +14,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build
-        run: echo "Building application..."
+      - name: Docker Build
+        run: docker build -t final-project:latest .
 
   test:
     needs: build
@@ -25,8 +25,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Test
-        run: echo "Running tests..."
+      - name: Run Tests
+        run: echo "Running application tests..."
 
   deploy:
     needs: test
@@ -36,5 +36,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy
-        run: echo "Deploying application..."
+      - name: Kubernetes Deployment
+        run: echo "Deploying application to Kubernetes..."
+
+      - name: Check Kubernetes
+        run: kubectl version --client
